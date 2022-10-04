@@ -1,13 +1,13 @@
-service: dzianis-prudnikau-shop-react-redux-cloudfront
+service: aws-shop-react-redux-cloudfront
 
 frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: nodejs16.x
-  region: eu-west-1
+  region: us-east-1
   # setup profile for AWS CLI.
-  # profile: node-aws
+  profile: default
 
 plugins:
   - serverless-finch
@@ -19,12 +19,13 @@ plugins:
 
 custom:
   client:
-    bucketName: dzianis-prudnikau-shop-react-redux-cloudfront
+    bucketName: aws-shop-react-redux-cloudfront-auto-provisioning
     distributionFolder: dist
-  s3BucketName: ${self:custom.client.bucketName}
+    profile: default
 
   ## Serverless-single-page-app-plugin configuration:
   s3LocalPath: ${self:custom.client.distributionFolder}/
+  s3BucketName: ${self:custom.client.bucketName}
   serverless-s3-cleaner:
     buckets:
       - ${self:custom.client.bucketName}
